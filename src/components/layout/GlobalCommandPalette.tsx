@@ -36,6 +36,9 @@ export default function GlobalCommandPalette({ lang }: { lang: string }) {
                 e.preventDefault();
                 setOpen((open) => !open);
             }
+            if (e.key === "Escape") {
+                setOpen(false);
+            }
         };
 
         document.addEventListener("keydown", down);
@@ -94,7 +97,12 @@ export default function GlobalCommandPalette({ lang }: { lang: string }) {
     if (!open) return null;
 
     return (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[9999] flex items-start justify-center pt-[15vh] p-4 animation-in fade-in duration-200">
+        <div
+            onClick={(e) => {
+                if (e.target === e.currentTarget) setOpen(false);
+            }}
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[9999] flex items-start justify-center pt-[15vh] p-4 animation-in fade-in duration-200"
+        >
             <Command
                 className="w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200"
                 shouldFilter={false} // Disable internal filtering to allow manual search state control if needed, but for now we keep standard behavior + external control

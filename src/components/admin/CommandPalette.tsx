@@ -19,6 +19,9 @@ export default function CommandPalette({ open, onOpenChange }: CommandPalettePro
                 e.preventDefault();
                 onOpenChange(!open);
             }
+            if (e.key === "Escape") {
+                onOpenChange(false);
+            }
         };
 
         document.addEventListener("keydown", down);
