@@ -6,7 +6,7 @@ import { Plus, Search, Truck, MoreVertical, Filter, MapPin, User, Settings as Se
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { VEHICLE_TYPES, HEAVY_VEHICLE_DATA, LIGHT_VEHICLE_BRANDS, TRAILER_TYPES } from "@/lib/vehicleData";
+import { VEHICLE_TYPES, TIR_DATA, KAMYON_DATA, LIGHT_VEHICLE_BRANDS, TRAILER_TYPES } from "@/lib/vehicleData";
 import { toast } from "sonner";
 
 export default function MyVehiclesPage({ params }: { params: { lang: string } }) {
@@ -99,8 +99,12 @@ export default function MyVehiclesPage({ params }: { params: { lang: string } })
                                                     <SelectValue placeholder="Marka Seçiniz..." />
                                                 </SelectTrigger>
                                                 <SelectContent className="bg-zinc-900 border-zinc-800 text-white">
-                                                    {['tir', 'kamyon'].includes(formData.type) ? (
-                                                        Object.keys(HEAVY_VEHICLE_DATA).map(b => (
+                                                    {formData.type === 'tir' ? (
+                                                        Object.keys(TIR_DATA).map(b => (
+                                                            <SelectItem key={b} value={b}>{b}</SelectItem>
+                                                        ))
+                                                    ) : formData.type === 'kamyon' ? (
+                                                        Object.keys(KAMYON_DATA).map(b => (
                                                             <SelectItem key={b} value={b}>{b}</SelectItem>
                                                         ))
                                                     ) : (
@@ -124,9 +128,15 @@ export default function MyVehiclesPage({ params }: { params: { lang: string } })
                                                         <SelectValue placeholder="Model Seçiniz..." />
                                                     </SelectTrigger>
                                                     <SelectContent className="bg-zinc-900 border-zinc-800 text-white">
-                                                        {HEAVY_VEHICLE_DATA[formData.brand]?.map(m => (
-                                                            <SelectItem key={m} value={m}>{m}</SelectItem>
-                                                        ))}
+                                                        {formData.type === 'tir' ? (
+                                                            TIR_DATA[formData.brand]?.map(m => (
+                                                                <SelectItem key={m} value={m}>{m}</SelectItem>
+                                                            ))
+                                                        ) : (
+                                                            KAMYON_DATA[formData.brand]?.map(m => (
+                                                                <SelectItem key={m} value={m}>{m}</SelectItem>
+                                                            ))
+                                                        )}
                                                     </SelectContent>
                                                 </Select>
                                             </div>

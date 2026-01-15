@@ -4,8 +4,8 @@ export const VEHICLE_TYPES = [
     { id: 'kamyonet', label: 'Kamyonet (Panelvan/Pick-up)' }
 ];
 
-// Complex structure for Heavy Vehicles (Brand -> Models[])
-export const HEAVY_VEHICLE_DATA: Record<string, string[]> = {
+// 1. TIR (Çekici/Tow Truck) Models
+export const TIR_DATA: Record<string, string[]> = {
     "BMC": ["Pro", "Tuğra"],
     "DAF": ["CF", "XF", "XG", "XG Plus"],
     "Ford Trucks": ["Cargo", "F-Line", "F-Max"],
@@ -18,7 +18,20 @@ export const HEAVY_VEHICLE_DATA: Record<string, string[]> = {
     "Volvo": ["FH", "FM"]
 };
 
-// Simple list for Vans/Light Trucks (Brand only for now, unless specific models needed later)
+// 2. KAMYON (Rigid Truck) Models - User providing data now
+export const KAMYON_DATA: Record<string, string[]> = {
+    "BMC": ["Fatih", "Pro", "Tuğra"],
+    // Other brands to be filled by user request, keeping basics for now
+    "Ford Trucks": ["Cargo", "1846T", "2520", "3230", "F-Line"],
+    "Mercedes-Benz": ["Atego", "Axor", "Actros (On Teker)"],
+    "MAN": ["TGL", "TGM", "TGS"],
+    "Isuzu": ["NPR", "NQR", "F-Series"],
+    "Mitsubishi Fuso": ["Canter"],
+    "Otokar": ["Atlas"],
+    "Iveco": ["Eurocargo"]
+};
+
+// 3. KAMYONET (Van/Light Truck) - Brand names usually suffice
 export const LIGHT_VEHICLE_BRANDS = [
     "Ford (Transit)",
     "Volkswagen (Crafter, Transporter)",
