@@ -1,43 +1,55 @@
-import RoleSelection from '@/components/auth/RoleSelection';
+'use client';
+
+import { useState } from 'react';
 import LoadOwnerView from '@/components/dashboard/roles/LoadOwnerView';
 import VehicleOwnerView from '@/components/dashboard/roles/VehicleOwnerView';
 import EnterpriseView from '@/components/dashboard/roles/EnterpriseView';
+import { Button } from '@/components/ui/button';
+import { Users, Truck, Building2 } from 'lucide-react';
 
-export default async function DashboardPage({
-    searchParams,
-    params
-}: {
-    searchParams: Promise<{ role?: string }>;
-    params: Promise<{ lang: string }>;
-}) {
-    const resolvedSearchParams = await searchParams;
-    const { lang } = await params;
-    const role = resolvedSearchParams?.role;
-
-    if (!role) {
-        return (
-            <div className="h-[80vh] flex items-center justify-center">
-                <div className="text-center">
-                    <h2 className="text-xl text-slate-400 mb-4">Lütfen Görünüm Seçiniz</h2>
-                    <div className="p-8 rounded-xl bg-slate-900 border border-white/5">
-                        <RoleSelection lang={lang} />
-                    </div>
-                </div>
-            </div>
-        );
-    }
+export default function DashboardPage() {
+    // SIMULATION STATE
+    const [currentView, setCurrentView] = useState<'load-owner' | 'vehicle-owner' | 'enterprise'>('load-owner');
 
     return (
-        <div className="animate-in fade-in duration-500">
-            {role === 'load_owner' && <LoadOwnerView />}
-            {role === 'vehicle_owner' && <VehicleOwnerView />}
-            {role === 'logistics_company' && <EnterpriseView />}
+        <div className="animate-in fade-in duration-500 relative min-h-screen">
 
-            {!['load_owner', 'vehicle_owner', 'logistics_company'].includes(role) && (
-                <div className="bg-red-500/10 border border-red-500/20 p-4 rounded-lg text-center text-red-400 mt-20">
-                    Geçersiz Rol Seçimi. Lütfen tekrar deneyiniz.
-                </div>
-            )}
+            {/* SIMULATION CONTROLS (Floating Top Center) */}
+            <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-slate-950/80 backdrop-blur-md border border-white/10 p-1.5 rounded-full shadow-2xl flex items-center gap-1 hover:scale-105 transition-transform duration-300">
+                <Button
+                    variant="ghost"
+                    size="sm"
+                    className={`rounded-full h-8 text-xs font-medium transition-all ${currentView === 'load-owner' ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/40' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
+                    onClick={() => setCurrentView('load-owner')}
+                >
+                    <Users className="w-3.5 h-3.5 mr-2" /> Yük Sahibi
+                </Button>
+                <div className="w-px h-4 bg-white/10 mx-1"></div>
+                <Button
+                    variant="ghost"
+                    size="sm"
+                    className={`rounded-full h-8 text-xs font-medium transition-all ${currentView === 'vehicle-owner' ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-900/40' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
+                    onClick={() => setCurrentView('vehicle-owner')}
+                >
+                    <Truck className="w-3.5 h-3.5 mr-2" /> Araç Sahibi
+                </Button>
+                <div className="w-px h-4 bg-white/10 mx-1"></div>
+                <Button
+                    variant="ghost"
+                    size="sm"
+                    className={`rounded-full h-8 text-xs font-medium transition-all ${currentView === 'enterprise' ? 'bg-violet-600 text-white shadow-lg shadow-violet-900/40' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
+                    onClick={() => setCurrentView('enterprise')}
+                >
+                    <Building2 className="w-3.5 h-3.5 mr-2" /> Lojistik Firması
+                </Button>
+            </div>
+
+            {/* View Render */}
+            <div className="pt-0">
+                {currentView === 'load-owner' && <LoadOwnerView />}
+                {currentView === 'vehicle-owner' && <VehicleOwnerView />}
+                {currentView === 'enterprise' && <EnterpriseView />}
+            </div>
         </div>
     );
 }

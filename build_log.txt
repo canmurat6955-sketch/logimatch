@@ -1,0 +1,438 @@
+﻿node.exe : ÔÜá Warning: 
+Next.js inferred your wo
+rkspace root, but it may
+ not be correct.
+At C:\Program Files\node
+js\npx.ps1:29 char:3
++   & $NODE_EXE $NPX_CLI
+_JS $args
++   ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~
+    + CategoryInfo      
+        : NotSpecified  
+  : (ÔÜá Warning: Ne.   
+ ..not be correct.:S    
+tring) [], RemoteEx    c
+eption
+    + FullyQualifiedErr 
+   orId : NativeComman  
+  dError
+ 
+ We detected multiple lo
+ckfiles and selected the
+ directory of C:\Users\M
+urat\package-lock.json a
+s the root directory.
+ To silence this warning
+, set `turbopack.root` i
+n your Next.js config, o
+r consider removing one 
+of the lockfiles if it's
+ not needed.
+   See https://nextjs.or
+g/docs/app/api-reference
+/config/next-config-js/t
+urbopack#root-directory 
+for more information.
+ Detected additional loc
+kfiles: 
+   * C:\Users\Murat\.gem
+ini\antigravity\scratch\
+haulink\package-lock.jso
+n
+
+Ôû▓ Next.js 16.1.1 (Turbopack)
+- Environments: .env.local
+
+ÔÜá The "middleware" fil
+e convention is deprecat
+ed. Please use "proxy" i
+nstead. Learn more: http
+s://nextjs.org/docs/mess
+ages/middleware-to-proxy
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build f
+ailed with 3 errors:
+./.gemini/antigravity/sc
+ratch/haulink/src/compon
+ents/dashboard/shipment/
+ShipmentDetails.tsx:5:1
+Module not found: Can't 
+resolve '@/components/ui
+/badge'
+[0m [90m 3 |[39m [36
+mimport[39m { [33mArro
+wLeft[39m[33m,[39m [
+33mMapPin[39m[33m,[39
+m [33mTruck[39m[33m,
+[39m [33mCalendar[39m
+[33m,[39m [33mClock[3
+9m[33m,[39m [33mFileT
+ext[39m[33m,[39m [33
+mDownload[39m[33m,[39
+m [33mUpload[39m[33m,
+[39m [33mCheckCircle2
+[39m[33m,[39m [33mCir
+cle[39m[33m,[39m [33
+mAlertCircle[39m } [36
+mfrom[39m [32m'lucide-
+react'[39m[33m;[39m
+ [90m 4 |[39m [36mimp
+ort[39m { [33mButton[
+39m } [36mfrom[39m [3
+2m'@/components/ui/butto
+n'[39m[33m;[39m
+[31m[1m>[22m[39m[90
+m 5 |[39m [36mimport[
+39m { [33mBadge[39m } 
+[36mfrom[39m [32m'@/c
+omponents/ui/badge'[39m
+[33m;[39m
+ [90m   |[39m [31m[1
+m^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39m
+ [90m 6 |[39m [36mimp
+ort[39m { [33mCard[39
+m[33m,[39m [33mCardCo
+ntent[39m[33m,[39m [
+33mCardHeader[39m[33m,
+[39m [33mCardTitle[39
+m } [36mfrom[39m [32m
+'@/components/ui/card'[
+39m[33m;[39m
+ [90m 7 |[39m [36mimp
+ort[39m { [33mSeparato
+r[39m } [36mfrom[39m 
+[32m'@/components/ui/se
+parator'[39m[33m;[39m
+ [90m 8 |[39m [36mimp
+ort[39m { useRouter } 
+[36mfrom[39m [32m'next
+/navigation'[39m[33m;
+[39m[0m
+
+Import map: aliased to r
+elative './src/component
+s/ui/badge' inside of [p
+roject]/.gemini/antigrav
+ity/scratch/haulink
+
+
+Import trace:
+  Server Component:
+    ./.gemini/antigravit
+y/scratch/haulink/src/co
+mponents/dashboard/shipm
+ent/ShipmentDetails.tsx
+    ./.gemini/antigravit
+y/scratch/haulink/src/ap
+p/[lang]/dashboard/shipm
+ents/[id]/page.tsx
+
+https://nextjs.org/docs/
+messages/module-not-foun
+d
+
+
+./.gemini/antigravity/sc
+ratch/haulink/src/compon
+ents/dashboard/shipment/
+ShipmentDetails.tsx:6:1
+Module not found: Can't 
+resolve '@/components/ui
+/card'
+[0m [90m 4 |[39m [36
+mimport[39m { [33mButt
+on[39m } [36mfrom[39m
+ [32m'@/components/ui/b
+utton'[39m[33m;[39m
+ [90m 5 |[39m [36mimp
+ort[39m { [33mBadge[3
+9m } [36mfrom[39m [32
+m'@/components/ui/badge'
+[39m[33m;[39m
+[31m[1m>[22m[39m[90
+m 6 |[39m [36mimport[
+39m { [33mCard[39m[33
+m,[39m [33mCardContent
+[39m[33m,[39m [33mCa
+rdHeader[39m[33m,[39m
+ [33mCardTitle[39m } 
+[36mfrom[39m [32m'@/co
+mponents/ui/card'[39m[
+33m;[39m
+ [90m   |[39m [31m[1
+m^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^[
+22m[39m
+ [90m 7 |[39m [36mimp
+ort[39m { [33mSeparato
+r[39m } [36mfrom[39m 
+[32m'@/components/ui/se
+parator'[39m[33m;[39m
+ [90m 8 |[39m [36mimp
+ort[39m { useRouter } 
+[36mfrom[39m [32m'next
+/navigation'[39m[33m;
+[39m
+ [90m 9 |[39m [36mimp
+ort[39m dynamic [36mfr
+om[39m [32m'next/dynam
+ic'[39m[33m;[39m[0m
+
+Import map: aliased to r
+elative './src/component
+s/ui/card' inside of [pr
+oject]/.gemini/antigravi
+ty/scratch/haulink
+
+
+Import trace:
+  Server Component:
+    ./.gemini/antigravit
+y/scratch/haulink/src/co
+mponents/dashboard/shipm
+ent/ShipmentDetails.tsx
+    ./.gemini/antigravit
+y/scratch/haulink/src/ap
+p/[lang]/dashboard/shipm
+ents/[id]/page.tsx
+
+https://nextjs.org/docs/
+messages/module-not-foun
+d
+
+
+./.gemini/antigravity/sc
+ratch/haulink/src/compon
+ents/dashboard/shipment/
+ShipmentDetails.tsx:7:1
+Module not found: Can't 
+resolve '@/components/ui
+/separator'
+[0m [90m  5 |[39m [3
+6mimport[39m { [33mBad
+ge[39m } [36mfrom[39m
+ [32m'@/components/ui/b
+adge'[39m[33m;[39m
+ [90m  6 |[39m [36mim
+port[39m { [33mCard[3
+9m[33m,[39m [33mCardC
+ontent[39m[33m,[39m 
+[33mCardHeader[39m[33m
+,[39m [33mCardTitle[3
+9m } [36mfrom[39m [32
+m'@/components/ui/card'
+[39m[33m;[39m
+[31m[1m>[22m[39m[90
+m  7 |[39m [36mimport
+[39m { [33mSeparator[3
+9m } [36mfrom[39m [32
+m'@/components/ui/separa
+tor'[39m[33m;[39m
+ [90m    |[39m [31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[3
+1m[1m^[22m[39m
+ [90m  8 |[39m [36mim
+port[39m { useRouter } 
+[36mfrom[39m [32m'nex
+t/navigation'[39m[33m;
+[39m
+ [90m  9 |[39m [36mim
+port[39m dynamic [36mf
+rom[39m [32m'next/dyna
+mic'[39m[33m;[39m
+ [90m 10 |[39m[0m
+
+Import map: aliased to r
+elative './src/component
+s/ui/separator' inside o
+f [project]/.gemini/anti
+gravity/scratch/haulink
+
+
+Import trace:
+  Server Component:
+    ./.gemini/antigravit
+y/scratch/haulink/src/co
+mponents/dashboard/shipm
+ent/ShipmentDetails.tsx
+    ./.gemini/antigravit
+y/scratch/haulink/src/ap
+p/[lang]/dashboard/shipm
+ents/[id]/page.tsx
+
+https://nextjs.org/docs/
+messages/module-not-foun
+d
+
+
+    at <unknown> (./.gem
+ini/antigravity/scratch/
+haulink/src/components/d
+ashboard/shipment/Shipme
+ntDetails.tsx:5:1)
+    at <unknown> (https:
+//nextjs.org/docs/messag
+es/module-not-found)
+    at <unknown> (./.gem
+ini/antigravity/scratch/
+haulink/src/components/d
+ashboard/shipment/Shipme
+ntDetails.tsx:6:1)
+    at <unknown> (https:
+//nextjs.org/docs/messag
+es/module-not-found)
+    at <unknown> (./.gem
+ini/antigravity/scratch/
+haulink/src/components/d
+ashboard/shipment/Shipme
+ntDetails.tsx:7:1)
+    at <unknown> (https:
+//nextjs.org/docs/messag
+es/module-not-found)
