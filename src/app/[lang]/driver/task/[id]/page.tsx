@@ -18,10 +18,13 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import ChatWidget from '@/components/chat/ChatWidget';
+import SignaturePad from '@/components/ui/signature-pad';
 
 export default function DriverTaskPage({ params }: { params: Promise<{ lang: string; id: string }> }) {
     const [status, setStatus] = useState<'assigned' | 'enroute' | 'arrived' | 'delivered'>('assigned');
     const [showCamera, setShowCamera] = useState(false);
+    const [showSignature, setShowSignature] = useState(false);
+    const [signatureData, setSignatureData] = useState<string | null>(null);
 
     // Mock Data
     const task = {
@@ -186,8 +189,8 @@ export default function DriverTaskPage({ params }: { params: Promise<{ lang: str
                             <input type="file" accept="image/*" capture="environment" className="absolute inset-0 opacity-0 cursor-pointer z-10" onChange={() => {
                                 setTimeout(() => {
                                     setShowCamera(false);
-                                    setStatus('delivered');
-                                }, 1500);
+                                    setShowSignature(true); // Proceed to signature
+                                }, 1000);
                             }} />
                             <Camera className="w-16 h-16 text-slate-500 mb-4 group-hover:text-blue-500 transition-colors" />
                             <span className="text-slate-400 font-medium group-hover:text-blue-400">Kamerayı Aç / Yükle</span>
@@ -199,6 +202,44 @@ export default function DriverTaskPage({ params }: { params: Promise<{ lang: str
                             İptal
                         </Button>
                     </div>
+                </div>
+            )}
+
+            {/* Signature Overlay */}
+            {showSignature && (
+                <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4 animation-in zoom-in-95 duration-200">
+                    <div className="w-full max-w-md h-[400px] bg-white rounded-xl overflow-hidden shadow-2xl">
+                        <SignaturePad
+                            onSave={(signature) => {
+                                setSignatureData(signature);
+                                setShowSignature(false);
+                                setStatus('delivered');
+                            }}
+                            onCancel={() => setShowSignature(false)}
+                        />
+                    </div>
+                </div>
+            )}
+
+            {/* Success Overlay */}
+            {status === 'delivered' && signatureData && (
+                <div className="fixed inset-0 z-40 bg-slate-950/90 flex flex-col items-center justify-center p-6 text-center animation-in fade-in duration-500">
+                    <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mb-6 shadow-lg shadow-green-500/20">
+                        <CheckCircle2 className="w-10 h-10 text-white" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-white mb-2">Teslimat Başarılı!</h2>
+                    <p className="text-slate-400 mb-8">Tüm veriler merkeze ve müşteriye iletildi.</p>
+
+                    <Card className="w-full max-w-sm bg-white/5 border-white/10 p-4 mb-8">
+                        <div className="text-xs text-slate-500 uppercase font-bold mb-2 text-left">Alıcı İmzası</div>
+                        <div className="bg-white rounded-lg p-2">
+                            <img src={signatureData} alt="Recipient Signature" className="w-full h-auto opacity-90" />
+                        </div>
+                    </Card>
+
+                    <Button className="w-full max-w-sm bg-slate-800 hover:bg-slate-700 text-white" onClick={() => window.location.reload()}>
+                        Yeni Göreve Dön
+                    </Button>
                 </div>
             )}
         </div>
