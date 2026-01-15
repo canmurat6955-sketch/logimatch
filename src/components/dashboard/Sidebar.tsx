@@ -36,7 +36,8 @@ const navGroups = [
     {
         title: 'Filo & Kaynaklar',
         items: [
-            { name: 'Filo Yönetimi', href: '/dashboard/fleet', icon: Truck },
+            { name: 'Araçlarım (Garaj)', href: '/dashboard/fleet/my-vehicles', icon: Truck },
+            { name: 'Filo Yönetimi (Admin)', href: '/dashboard/fleet', icon: LayoutDashboard },
             { name: 'Şoförler', href: '/dashboard/drivers', icon: Users },
         ]
     },
@@ -44,6 +45,7 @@ const navGroups = [
         title: 'Finans',
         items: [
             { name: 'Finansal Özet', href: '/dashboard/finance', icon: CreditCard },
+            { name: 'Cüzdan & Bakiye', href: '/dashboard/finance/wallet', icon: Wallet },
             { name: 'Raporlar', href: '/dashboard/reports', icon: BarChart3 },
         ]
     }
@@ -59,7 +61,7 @@ export default function Sidebar({ lang }: { lang: string }) {
                     <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
                         <Truck className="text-white w-5 h-5" />
                     </div>
-                    <span className="text-xl font-bold text-white">LOGIMATCH</span>
+                    <span className="text-xl font-bold text-white">HAULINK</span>
                 </div>
 
                 <div className="space-y-1">
