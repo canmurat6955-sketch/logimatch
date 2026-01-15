@@ -64,3 +64,13 @@ export const TRAILER_TYPES = [
     { id: 'tanker', label: 'Tanker (Sıvı)' },
     { id: 'acik', label: 'Açık Kasa' }
 ];
+
+export const VEHICLE_FEATURES = [
+    { id: 'lift', label: 'Liftli' },
+    { id: 'adr', label: 'ADR (Tehlikeli Madde)' },
+    { id: 'kayar_cati', label: 'Kayar Çatı' },
+    { id: 'kayar_perde', label: 'Kayar Perde' },
+    { id: 'askili', label: 'Askılı (Tekstil)' },
+    { id: 'cift_kat', label: 'Çift Kat (Double Deck)' },
+    { id: 'spanzet', label: 'Spanzetli' }
+];

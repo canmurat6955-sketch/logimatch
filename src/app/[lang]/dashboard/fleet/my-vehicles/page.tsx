@@ -2,12 +2,15 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Plus, Search, Truck, MoreVertical, Filter, MapPin, User, Settings as SettingsIcon } from "lucide-react";
+import { Plus, Search, Truck, MoreVertical, Filter, MapPin, User, Settings as SettingsIcon, Info, Calendar as CalendarIcon, FileText, Ruler, ShieldCheck } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { VEHICLE_TYPES, TIR_DATA, KAMYON_DATA, KAMYONET_DATA, TRAILER_TYPES } from "@/lib/vehicleData";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+import { VEHICLE_TYPES, TIR_DATA, KAMYON_DATA, KAMYONET_DATA, TRAILER_TYPES, VEHICLE_FEATURES } from "@/lib/vehicleData";
 import { toast } from "sonner";
+import { useEffect } from "react";
 
 export default function MyVehiclesPage({ params }: { params: { lang: string } }) {
     const [vehicles, setVehicles] = useState<any[]>([]); // Mock data for now, will connect to supabase
@@ -18,10 +21,43 @@ export default function MyVehiclesPage({ params }: { params: { lang: string } })
         plate: "",
         type: "",
         brand: "",
-        model: "", // Free text or specific
+        model: "",
         trailer: "",
-        driver: ""
+        driver: "",
+        // New Fields
+        length: "",
+        width: "",
+        height: "",
+        volume: "",
+        features: [] as string[],
+        insurance_expiry: "",
+        inspection_expiry: ""
     });
+
+    // Auto-calculate Volume (m3)
+    useEffect(() => {
+        if (formData.length && formData.width && formData.height) {
+            const l = parseFloat(formData.length);
+            const w = parseFloat(formData.width);
+            const h = parseFloat(formData.height);
+            if (!isNaN(l) && !isNaN(w) && !isNaN(h)) {
+                // Determine divisor based on unit (assuming CM input, result in M3)
+                // Volume = (L * W * H) / 1000000
+                const vol = (l * w * h) / 10000; // Actually wait, if inputs are cm: 100cm * 100cm * 100cm = 1,000,000 cm3 = 1 m3.
+                // Calculation: (L_cm * W_cm * H_cm) / 1,000,000
+                const volumeM3 = (l * w * h) / 1000000;
+                setFormData(prev => ({ ...prev, volume: volumeM3.toFixed(2) }));
+            }
+        }
+    }, [formData.length, formData.width, formData.height]);
+
+    const toggleFeature = (featureId: string) => {
+        setFormData(prev => {
+            const exists = prev.features.includes(featureId);
+            if (exists) return { ...prev, features: prev.features.filter(f => f !== featureId) };
+            return { ...prev, features: [...prev.features, featureId] };
+        });
+    };
 
     const handleSave = () => {
         if (!formData.plate || !formData.type || !formData.brand) {
@@ -38,7 +74,10 @@ export default function MyVehiclesPage({ params }: { params: { lang: string } })
 
         setVehicles([...vehicles, newVehicle]);
         setIsAddOpen(false);
-        setFormData({ plate: "", type: "", brand: "", model: "", trailer: "", driver: "" });
+        setFormData({
+            plate: "", type: "", brand: "", model: "", trailer: "", driver: "",
+            length: "", width: "", height: "", volume: "", features: [], insurance_expiry: "", inspection_expiry: ""
+        });
         toast.success("Araç başarıyla garajınıza eklendi! 🚛");
     };
 
@@ -67,139 +106,233 @@ export default function MyVehiclesPage({ params }: { params: { lang: string } })
                             <DialogHeader>
                                 <DialogTitle>Garaja Yeni Araç Ekle</DialogTitle>
                             </DialogHeader>
-                            <div className="space-y-4 py-4">
-                                {/* Type Selection */}
-                                <div className="space-y-2">
-                                    <label className="text-sm text-zinc-400">Araç Tipi</label>
-                                    <Select
-                                        value={formData.type}
-                                        onValueChange={(val) => setFormData({ ...formData, type: val, brand: '' })}
-                                    >
-                                        <SelectTrigger className="bg-zinc-900 border-zinc-800">
-                                            <SelectValue placeholder="Seçiniz..." />
-                                        </SelectTrigger>
-                                        <SelectContent className="bg-zinc-900 border-zinc-800 text-white">
-                                            {VEHICLE_TYPES.map(t => (
-                                                <SelectItem key={t.id} value={t.id}>{t.label}</SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                </div>
 
-                                {formData.type && (
-                                    <>
-                                        {/* Brand Select */}
+                            <Tabs defaultValue="identity" className="w-full mt-4">
+                                <TabsList className="grid w-full grid-cols-4 bg-zinc-900">
+                                    <TabsTrigger value="identity">Kimlik</TabsTrigger>
+                                    <TabsTrigger value="specs">Teknik</TabsTrigger>
+                                    <TabsTrigger value="features">Özellik</TabsTrigger>
+                                    <TabsTrigger value="docs">Evrak</TabsTrigger>
+                                </TabsList>
+
+                                {/* TAB 1: KIMLIK (IDENTITY) */}
+                                <TabsContent value="identity" className="space-y-4 py-4">
+                                    <div className="grid grid-cols-2 gap-4">
                                         <div className="space-y-2">
-                                            <label className="text-sm text-zinc-400">Marka</label>
+                                            <label className="text-sm text-zinc-400">Plaka</label>
+                                            <Input
+                                                placeholder="34 ABC 123"
+                                                className="bg-zinc-900 border-zinc-800 uppercase"
+                                                value={formData.plate}
+                                                onChange={(e) => setFormData({ ...formData, plate: e.target.value.toUpperCase() })}
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-sm text-zinc-400">Araç Tipi</label>
                                             <Select
-                                                value={formData.brand}
-                                                onValueChange={(val) => setFormData({ ...formData, brand: val, model: '' })}
+                                                value={formData.type}
+                                                onValueChange={(val) => setFormData({ ...formData, type: val, brand: '' })}
                                             >
                                                 <SelectTrigger className="bg-zinc-900 border-zinc-800">
-                                                    <SelectValue placeholder="Marka Seçiniz..." />
+                                                    <SelectValue placeholder="Seçiniz..." />
                                                 </SelectTrigger>
                                                 <SelectContent className="bg-zinc-900 border-zinc-800 text-white">
-                                                    {formData.type === 'tir' ? (
-                                                        Object.keys(TIR_DATA).map(b => (
-                                                            <SelectItem key={b} value={b}>{b}</SelectItem>
-                                                        ))
-                                                    ) : formData.type === 'kamyon' ? (
-                                                        Object.keys(KAMYON_DATA).map(b => (
-                                                            <SelectItem key={b} value={b}>{b}</SelectItem>
-                                                        ))
-                                                    ) : (
-                                                        Object.keys(KAMYONET_DATA).map(b => (
-                                                            <SelectItem key={b} value={b}>{b}</SelectItem>
-                                                        ))
-                                                    )}
+                                                    {VEHICLE_TYPES.map(t => (
+                                                        <SelectItem key={t.id} value={t.id}>{t.label}</SelectItem>
+                                                    ))}
                                                 </SelectContent>
                                             </Select>
                                         </div>
+                                    </div>
 
-                                        {/* Model Select (Now works for ALL types) */}
-                                        {formData.brand && (
+                                    {formData.type && (
+                                        <div className="grid grid-cols-2 gap-4">
                                             <div className="space-y-2">
-                                                <label className="text-sm text-zinc-400">Model</label>
+                                                <label className="text-sm text-zinc-400">Marka</label>
                                                 <Select
-                                                    value={formData.model}
-                                                    onValueChange={(val) => setFormData({ ...formData, model: val })}
+                                                    value={formData.brand}
+                                                    onValueChange={(val) => setFormData({ ...formData, brand: val, model: '' })}
                                                 >
                                                     <SelectTrigger className="bg-zinc-900 border-zinc-800">
-                                                        <SelectValue placeholder="Model Seçiniz..." />
+                                                        <SelectValue placeholder="Seçiniz..." />
                                                     </SelectTrigger>
                                                     <SelectContent className="bg-zinc-900 border-zinc-800 text-white">
                                                         {formData.type === 'tir' ? (
-                                                            TIR_DATA[formData.brand]?.map(m => (
-                                                                <SelectItem key={m} value={m}>{m}</SelectItem>
-                                                            ))
+                                                            Object.keys(TIR_DATA).map(b => <SelectItem key={b} value={b}>{b}</SelectItem>)
                                                         ) : formData.type === 'kamyon' ? (
-                                                            KAMYON_DATA[formData.brand]?.map(m => (
-                                                                <SelectItem key={m} value={m}>{m}</SelectItem>
-                                                            ))
+                                                            Object.keys(KAMYON_DATA).map(b => <SelectItem key={b} value={b}>{b}</SelectItem>)
                                                         ) : (
-                                                            KAMYONET_DATA[formData.brand]?.map(m => (
-                                                                <SelectItem key={m} value={m}>{m}</SelectItem>
-                                                            ))
+                                                            Object.keys(KAMYONET_DATA).map(b => <SelectItem key={b} value={b}>{b}</SelectItem>)
                                                         )}
                                                     </SelectContent>
                                                 </Select>
                                             </div>
-                                        )}
-                                    </>
-                                )}
 
-                                {/* Plate & Model */}
-                                <div className="grid grid-cols-2 gap-4">
+                                            {formData.brand && (
+                                                <div className="space-y-2">
+                                                    <label className="text-sm text-zinc-400">Model</label>
+                                                    <Select
+                                                        value={formData.model}
+                                                        onValueChange={(val) => setFormData({ ...formData, model: val })}
+                                                    >
+                                                        <SelectTrigger className="bg-zinc-900 border-zinc-800">
+                                                            <SelectValue placeholder="Seçiniz..." />
+                                                        </SelectTrigger>
+                                                        <SelectContent className="bg-zinc-900 border-zinc-800 text-white">
+                                                            {formData.type === 'tir' ? (
+                                                                TIR_DATA[formData.brand]?.map(m => <SelectItem key={m} value={m}>{m}</SelectItem>)
+                                                            ) : formData.type === 'kamyon' ? (
+                                                                KAMYON_DATA[formData.brand]?.map(m => <SelectItem key={m} value={m}>{m}</SelectItem>)
+                                                            ) : (
+                                                                KAMYONET_DATA[formData.brand]?.map(m => <SelectItem key={m} value={m}>{m}</SelectItem>)
+                                                            )}
+                                                        </SelectContent>
+                                                    </Select>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+
+                                    {['tir', 'kamyon'].includes(formData.type) && (
+                                        <div className="space-y-2">
+                                            <label className="text-sm text-zinc-400">Dorse / Kasa Tipi</label>
+                                            <Select
+                                                value={formData.trailer}
+                                                onValueChange={(val) => setFormData({ ...formData, trailer: val })}
+                                            >
+                                                <SelectTrigger className="bg-zinc-900 border-zinc-800">
+                                                    <SelectValue placeholder="Seçiniz..." />
+                                                </SelectTrigger>
+                                                <SelectContent className="bg-zinc-900 border-zinc-800 text-white">
+                                                    {TRAILER_TYPES.map(t => (
+                                                        <SelectItem key={t.id} value={t.id}>{t.label}</SelectItem>
+                                                    ))}
+                                                </SelectContent>
+                                            </Select>
+                                        </div>
+                                    )}
+
                                     <div className="space-y-2">
-                                        <label className="text-sm text-zinc-400">Plaka</label>
-                                        <Input
-                                            placeholder="34 ABC 123"
-                                            className="bg-zinc-900 border-zinc-800 uppercase"
-                                            value={formData.plate}
-                                            onChange={(e) => setFormData({ ...formData, plate: e.target.value.toUpperCase() })}
-                                        />
+                                        <label className="text-sm text-zinc-400">Sürücü (Opsiyonel)</label>
+                                        <div className="relative">
+                                            <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+                                            <Input
+                                                placeholder="Ad Soyad"
+                                                className="pl-9 bg-zinc-900 border-zinc-800"
+                                                value={formData.driver}
+                                                onChange={(e) => setFormData({ ...formData, driver: e.target.value })}
+                                            />
+                                        </div>
                                     </div>
-                                    {/* All types now use the Select above. Fallback input removed. */}
-                                </div>
+                                </TabsContent>
 
-                                {/* Trailer Type (If Tir or Kamyon) */}
-                                {['tir', 'kamyon'].includes(formData.type) && (
-                                    <div className="space-y-2">
-                                        <label className="text-sm text-zinc-400">Dorse / Kasa Tipi</label>
-                                        <Select
-                                            value={formData.trailer}
-                                            onValueChange={(val) => setFormData({ ...formData, trailer: val })}
-                                        >
-                                            <SelectTrigger className="bg-zinc-900 border-zinc-800">
-                                                <SelectValue placeholder="Seçiniz..." />
-                                            </SelectTrigger>
-                                            <SelectContent className="bg-zinc-900 border-zinc-800 text-white">
-                                                {TRAILER_TYPES.map(t => (
-                                                    <SelectItem key={t.id} value={t.id}>{t.label}</SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
+                                {/* TAB 2: TEKNIK (SPECS) */}
+                                <TabsContent value="specs" className="space-y-4 py-4">
+                                    <div className="grid grid-cols-3 gap-3">
+                                        <div className="space-y-2">
+                                            <label className="text-sm text-zinc-400">Uzunluk (cm)</label>
+                                            <div className="relative">
+                                                <Ruler className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+                                                <Input
+                                                    type="number"
+                                                    placeholder="1360"
+                                                    className="pl-9 bg-zinc-900 border-zinc-800"
+                                                    value={formData.length}
+                                                    onChange={(e) => setFormData({ ...formData, length: e.target.value })}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-sm text-zinc-400">Genişlik (cm)</label>
+                                            <Input
+                                                type="number"
+                                                placeholder="245"
+                                                className="bg-zinc-900 border-zinc-800"
+                                                value={formData.width}
+                                                onChange={(e) => setFormData({ ...formData, width: e.target.value })}
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-sm text-zinc-400">Yükseklik (cm)</label>
+                                            <Input
+                                                type="number"
+                                                placeholder="280"
+                                                className="bg-zinc-900 border-zinc-800"
+                                                value={formData.height}
+                                                onChange={(e) => setFormData({ ...formData, height: e.target.value })}
+                                            />
+                                        </div>
                                     </div>
-                                )}
 
-                                {/* Driver Name */}
-                                <div className="space-y-2">
-                                    <label className="text-sm text-zinc-400">Zimmetli Sürücü (Opsiyonel)</label>
-                                    <div className="relative">
-                                        <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
-                                        <Input
-                                            placeholder="Ad Soyad"
-                                            className="pl-9 bg-zinc-900 border-zinc-800"
-                                            value={formData.driver}
-                                            onChange={(e) => setFormData({ ...formData, driver: e.target.value })}
-                                        />
+                                    <div className="bg-zinc-900/50 p-4 rounded-lg border border-zinc-800 flex justify-between items-center">
+                                        <div className="flex items-center gap-2 text-zinc-400">
+                                            <Info className="w-4 h-4" />
+                                            <span className="text-sm">Hesaplanan Hacim</span>
+                                        </div>
+                                        <div className="text-xl font-bold text-white">
+                                            {formData.volume ? `${formData.volume} m³` : '-'}
+                                        </div>
                                     </div>
-                                </div>
+                                </TabsContent>
 
-                                <Button onClick={handleSave} className="w-full bg-blue-600 hover:bg-blue-500 text-white mt-4">
-                                    Kaydet ve Ekle
-                                </Button>
-                            </div>
+                                {/* TAB 3: OZELLIK (FEATURES) */}
+                                <TabsContent value="features" className="space-y-4 py-4">
+                                    <div className="flex flex-wrap gap-2">
+                                        {VEHICLE_FEATURES.map(feat => {
+                                            const isSelected = formData.features.includes(feat.id);
+                                            return (
+                                                <div
+                                                    key={feat.id}
+                                                    onClick={() => toggleFeature(feat.id)}
+                                                    className={`
+                                                        cursor-pointer px-4 py-2 rounded-full border text-sm font-medium transition-all
+                                                        ${isSelected
+                                                            ? 'bg-blue-600 border-blue-500 text-white'
+                                                            : 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:border-zinc-700'
+                                                        }
+                                                    `}
+                                                >
+                                                    {feat.label}
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
+                                </TabsContent>
+
+                                {/* TAB 4: EVRAK (DOCS) */}
+                                <TabsContent value="docs" className="space-y-4 py-4">
+                                    <div className="space-y-4">
+                                        <div className="space-y-2">
+                                            <label className="text-sm text-zinc-400">Trafik Sigortası Bitiş Tarihi</label>
+                                            <div className="relative">
+                                                <ShieldCheck className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+                                                <Input
+                                                    type="date"
+                                                    className="pl-9 bg-zinc-900 border-zinc-800 block w-full"
+                                                    value={formData.insurance_expiry}
+                                                    onChange={(e) => setFormData({ ...formData, insurance_expiry: e.target.value })}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-sm text-zinc-400">Muayene Geçerlilik Tarihi</label>
+                                            <div className="relative">
+                                                <FileText className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+                                                <Input
+                                                    type="date"
+                                                    className="pl-9 bg-zinc-900 border-zinc-800 block w-full"
+                                                    value={formData.inspection_expiry}
+                                                    onChange={(e) => setFormData({ ...formData, inspection_expiry: e.target.value })}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </TabsContent>
+                            </Tabs>
+
+                            <Button onClick={handleSave} className="w-full bg-blue-600 hover:bg-blue-500 text-white mt-2">
+                                Kaydet ve Ekle
+                            </Button>
                         </DialogContent>
                     </Dialog>
                 </div>
@@ -243,6 +376,17 @@ export default function MyVehiclesPage({ params }: { params: { lang: string } })
                                     <span className="text-zinc-500">Araç Tipi:</span>
                                     <span className="text-zinc-300 capitalize">{vehicle.type}</span>
                                 </div>
+
+                                {/* Specs Display */}
+                                {vehicle.volume && (
+                                    <div className="flex justify-between text-sm">
+                                        <span className="text-zinc-500">Kapasite:</span>
+                                        <span className="text-zinc-300 font-medium">
+                                            {vehicle.volume}m³ <span className="text-zinc-500 text-xs font-normal">({vehicle.length}x{vehicle.width}x{vehicle.height})</span>
+                                        </span>
+                                    </div>
+                                )}
+
                                 <div className="flex justify-between text-sm">
                                     <span className="text-zinc-500">Dorse:</span>
                                     <span className="text-zinc-300 capitalize">{TRAILER_TYPES.find(t => t.id === vehicle.trailer)?.label || '-'}</span>
@@ -259,6 +403,21 @@ export default function MyVehiclesPage({ params }: { params: { lang: string } })
                                 </div>
                             </div>
 
+                            {/* Features Badges */}
+                            {vehicle.features && vehicle.features.length > 0 && (
+                                <div className="flex flex-wrap gap-1 mb-4">
+                                    {vehicle.features.map((fid: string) => {
+                                        const label = VEHICLE_FEATURES.find(f => f.id === fid)?.label;
+                                        return label ? (
+                                            <Badge key={fid} variant="secondary" className="bg-zinc-800 text-zinc-400 border-zinc-700 text-[10px] px-1.5 py-0">
+                                                {label}
+                                            </Badge>
+                                        ) : null;
+                                    })}
+                                </div>
+                            )}
+
+                            {/* Footer / Actions */}
                             <div className="flex gap-2 pt-2 border-t border-zinc-800">
                                 <Button size="sm" variant="ghost" className="flex-1 h-8 text-zinc-400 hover:text-white">
                                     <MapPin className="w-3 h-3 mr-2" /> Haritada Gör
