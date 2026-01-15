@@ -8,6 +8,7 @@ import PWAInstaller from "@/components/pwa/PWAInstaller";
 import SonnerToaster from "@/components/ui/SonnerToaster";
 import { NotificationProvider } from "@/lib/contexts/NotificationContext";
 import ToastContainer from "@/components/ui/ToastContainer";
+import MuavinAI from "@/components/ai/MuavinAI";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
@@ -43,10 +44,11 @@ export default async function RootLayout({
                     <main className="pt-16 min-h-screen relative">
                         {children}
                     </main>
+                    <MuavinAI />
 
                     <footer className="bg-slate-950 border-t border-white/5 py-12">
                         <div className="max-w-7xl mx-auto px-6 text-center text-slate-500 text-sm">
-                            &copy; {new Date().getFullYear()} Logimatch Logistics SaaS.
+                            &copy; {new Date().getFullYear()} Haulink Logistics SaaS.
                         </div>
                     </footer>
                 </NotificationProvider>
