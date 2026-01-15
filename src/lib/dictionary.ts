@@ -114,7 +114,7 @@ const dict: Record<Locale, any> = {
                 },
                 {
                     q: "Araç takibi için cihaz gerekli mi?",
-                    a: "Hayır, Logimatch sürücü mobil uygulaması üzerinden GPS verilerini kullanarak takip sağlar. Ek donanım maliyeti yaratmaz."
+                    a: "Hayır, Haulink sürücü mobil uygulaması üzerinden GPS verilerini kullanarak takip sağlar. Ek donanım maliyeti yaratmaz."
                 },
                 {
                     q: "Sadece tek bir tıra sahibiyim, kullanabilir miyim?",
@@ -170,7 +170,7 @@ const dict: Record<Locale, any> = {
                 "Unknown vehicle profitability",
                 "Driver performance not measurable"
             ],
-            solutionTitle: "Logimatch",
+            solutionTitle: "Haulink",
             solutionHighlight: "Solution",
             solutions: [
                 "Loads distributed automatically by route",
@@ -232,7 +232,7 @@ const dict: Record<Locale, any> = {
             p3: "There are systems to find loads. There are accounting programs. But there is no system that manages",
             p3Highlight: "load + route + cost + profitability",
             p3End: "on a single screen.",
-            p4: "This gap was the reason for Logimatch's birth. Our goal is not just to find loads, but to be the financial operating system of the logistics sector."
+            p4: "This gap was the reason for Haulink's birth. Our goal is not just to find loads, but to be the financial operating system of the logistics sector."
         },
         faq: {
             title: "Frequently Asked Questions",
@@ -243,7 +243,7 @@ const dict: Record<Locale, any> = {
                 },
                 {
                     q: "Is a device required for vehicle tracking?",
-                    a: "No, Logimatch provides tracking using GPS data via the driver mobile app. It creates no extra hardware cost."
+                    a: "No, Haulink provides tracking using GPS data via the driver mobile app. It creates no extra hardware cost."
                 },
                 {
                     q: "I own just one truck, can I use it?",
@@ -270,7 +270,7 @@ const dict: Record<Locale, any> = {
                 privacy: "Privacy Policy",
                 terms: "Terms of Use"
             },
-            copyright: "© 2026 Logimatch. All rights reserved."
+            copyright: "© 2026 Haulink. All rights reserved."
         }
     },
     ru: { // Placeholder for RU using EN content where needed or simple trans
@@ -293,7 +293,7 @@ const dict: Record<Locale, any> = {
             problemTitle: "Logistics Problems",
             problemHighlight: "Today",
             problems: ["Cannot match suitable load", "Vehicles run empty", "Uncontrolled expenses", "Unknown profitability", "Unmeasured performance"],
-            solutionTitle: "Logimatch",
+            solutionTitle: "Haulink",
             solutionHighlight: "Solution",
             solutions: ["Automated load distribution", "Integrated navigation", "Dynamic pricing", "Expense tracking", "Instant profitability"]
         },
@@ -333,7 +333,7 @@ const dict: Record<Locale, any> = {
             p3: "No system manages load + cost + profit together.",
             p3Highlight: "",
             p3End: "",
-            p4: "This is why Logimatch exists."
+            p4: "This is why Haulink exists."
         },
         faq: {
             title: "FAQ",
@@ -348,7 +348,7 @@ const dict: Record<Locale, any> = {
             description: "Logistics OS.",
             sections: { product: "Product", company: "Company", legal: "Legal" },
             links: { features: "Features", pricing: "Pricing", about: "About", contact: "Contact", privacy: "Privacy", terms: "Terms" },
-            copyright: "© 2026 Logimatch."
+            copyright: "© 2026 Haulink."
         }
     },
     it: { // Placeholder IT
@@ -371,7 +371,7 @@ const dict: Record<Locale, any> = {
             problemTitle: "Problemi logistici",
             problemHighlight: "Oggi",
             problems: ["Nessuna corrispondenza", "Veicoli vuoti", "Spese incontrollate", "Redditività ignota", "Performance non misurabile"],
-            solutionTitle: "Logimatch",
+            solutionTitle: "Haulink",
             solutionHighlight: "Soluzione",
             solutions: ["Distribuzione automatica", "Navigazione integrata", "Prezzi dinamici", "Tracciamento spese", "Redditività istantanea"]
         },
@@ -411,7 +411,7 @@ const dict: Record<Locale, any> = {
             p3: "Nessun sistema gestisce tutto insieme.",
             p3Highlight: "",
             p3End: "",
-            p4: "Ecco perché Logimatch."
+            p4: "Ecco perché Haulink."
         },
         faq: {
             title: "FAQ",
@@ -426,7 +426,7 @@ const dict: Record<Locale, any> = {
             description: "OS Logistico.",
             sections: { product: "Prodotto", company: "Azienda", legal: "Legale" },
             links: { features: "Funzioni", pricing: "Prezzi", about: "Chi Siamo", contact: "Contatti", privacy: "Privacy", terms: "Termini" },
-            copyright: "© 2026 Logimatch."
+            copyright: "© 2026 Haulink."
         }
     },
     fr: { // Placeholder FR
@@ -449,7 +449,7 @@ const dict: Record<Locale, any> = {
             problemTitle: "Problèmes logistiques",
             problemHighlight: "Aujourd'hui",
             problems: ["Pas de correspondance", "Véhicules vides", "Dépenses incontrôlées", "Rentabilité inconnue", "Perf. non mesurable"],
-            solutionTitle: "Logimatch",
+            solutionTitle: "Haulink",
             solutionHighlight: "Solution",
             solutions: ["Distribution auto", "Navigation", "Prix dynamiques", "Suivi dépenses", "Rentabilité instantanée"]
         },
@@ -489,7 +489,7 @@ const dict: Record<Locale, any> = {
             p3: "Aucun système ne gère tout.",
             p3Highlight: "",
             p3End: "",
-            p4: "C'est pourquoi Logimatch."
+            p4: "C'est pourquoi Haulink."
         },
         faq: {
             title: "FAQ",
@@ -504,7 +504,7 @@ const dict: Record<Locale, any> = {
             description: "OS Logistique.",
             sections: { product: "Produit", company: "Société", legal: "Légal" },
             links: { features: "Fonctions", pricing: "Tarifs", about: "À Propos", contact: "Contact", privacy: "Confidentialité", terms: "Conditions" },
-            copyright: "© 2026 Logimatch."
+            copyright: "© 2026 Haulink."
         }
     }
 };
