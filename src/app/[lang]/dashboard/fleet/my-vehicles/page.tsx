@@ -6,7 +6,7 @@ import { Plus, Search, Truck, MoreVertical, Filter, MapPin, User, Settings as Se
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { VEHICLE_TYPES, VEHICLE_BRANDS, TRAILER_TYPES } from "@/lib/vehicleData";
+import { VEHICLE_TYPES, HEAVY_VEHICLE_DATA, LIGHT_VEHICLE_BRANDS, TRAILER_TYPES } from "@/lib/vehicleData";
 import { toast } from "sonner";
 
 export default function MyVehiclesPage({ params }: { params: { lang: string } }) {
@@ -86,24 +86,52 @@ export default function MyVehiclesPage({ params }: { params: { lang: string } })
                                     </Select>
                                 </div>
 
-                                {/* Brand Selection (Dependent on Type) */}
                                 {formData.type && (
-                                    <div className="space-y-2">
-                                        <label className="text-sm text-zinc-400">Marka</label>
-                                        <Select
-                                            value={formData.brand}
-                                            onValueChange={(val) => setFormData({ ...formData, brand: val })}
-                                        >
-                                            <SelectTrigger className="bg-zinc-900 border-zinc-800">
-                                                <SelectValue placeholder="Marka Seçiniz..." />
-                                            </SelectTrigger>
-                                            <SelectContent className="bg-zinc-900 border-zinc-800 text-white">
-                                                {VEHICLE_BRANDS[formData.type]?.map(b => (
-                                                    <SelectItem key={b} value={b}>{b}</SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </div>
+                                    <>
+                                        {/* Brand Select */}
+                                        <div className="space-y-2">
+                                            <label className="text-sm text-zinc-400">Marka</label>
+                                            <Select
+                                                value={formData.brand}
+                                                onValueChange={(val) => setFormData({ ...formData, brand: val, model: '' })}
+                                            >
+                                                <SelectTrigger className="bg-zinc-900 border-zinc-800">
+                                                    <SelectValue placeholder="Marka Seçiniz..." />
+                                                </SelectTrigger>
+                                                <SelectContent className="bg-zinc-900 border-zinc-800 text-white">
+                                                    {['tir', 'kamyon'].includes(formData.type) ? (
+                                                        Object.keys(HEAVY_VEHICLE_DATA).map(b => (
+                                                            <SelectItem key={b} value={b}>{b}</SelectItem>
+                                                        ))
+                                                    ) : (
+                                                        LIGHT_VEHICLE_BRANDS.map(b => (
+                                                            <SelectItem key={b} value={b}>{b}</SelectItem>
+                                                        ))
+                                                    )}
+                                                </SelectContent>
+                                            </Select>
+                                        </div>
+
+                                        {/* Model Select (Only for Heavy Vehicles and if Brand is selected) */}
+                                        {['tir', 'kamyon'].includes(formData.type) && formData.brand && (
+                                            <div className="space-y-2">
+                                                <label className="text-sm text-zinc-400">Model</label>
+                                                <Select
+                                                    value={formData.model}
+                                                    onValueChange={(val) => setFormData({ ...formData, model: val })}
+                                                >
+                                                    <SelectTrigger className="bg-zinc-900 border-zinc-800">
+                                                        <SelectValue placeholder="Model Seçiniz..." />
+                                                    </SelectTrigger>
+                                                    <SelectContent className="bg-zinc-900 border-zinc-800 text-white">
+                                                        {HEAVY_VEHICLE_DATA[formData.brand]?.map(m => (
+                                                            <SelectItem key={m} value={m}>{m}</SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                            </div>
+                                        )}
+                                    </>
                                 )}
 
                                 {/* Plate & Model */}
@@ -117,15 +145,18 @@ export default function MyVehiclesPage({ params }: { params: { lang: string } })
                                             onChange={(e) => setFormData({ ...formData, plate: e.target.value.toUpperCase() })}
                                         />
                                     </div>
-                                    <div className="space-y-2">
-                                        <label className="text-sm text-zinc-400">Yıl / Model Detayı</label>
-                                        <Input
-                                            placeholder="Örn: 2023 / 1846T"
-                                            className="bg-zinc-900 border-zinc-800"
-                                            value={formData.model}
-                                            onChange={(e) => setFormData({ ...formData, model: e.target.value })}
-                                        />
-                                    </div>
+                                    {/* Model Input - ONLY show for Light Vehicles (since Heavy uses Select above) */}
+                                    {!['tir', 'kamyon'].includes(formData.type) && (
+                                        <div className="space-y-2">
+                                            <label className="text-sm text-zinc-400">Yıl / Model Detayı</label>
+                                            <Input
+                                                placeholder="Örn: 2023 / 1846T"
+                                                className="bg-zinc-900 border-zinc-800"
+                                                value={formData.model}
+                                                onChange={(e) => setFormData({ ...formData, model: e.target.value })}
+                                            />
+                                        </div>
+                                    )}
                                 </div>
 
                                 {/* Trailer Type (If Tir or Kamyon) */}

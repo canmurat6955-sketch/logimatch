@@ -4,37 +4,31 @@ export const VEHICLE_TYPES = [
     { id: 'kamyonet', label: 'Kamyonet (Panelvan/Pick-up)' }
 ];
 
-export const VEHICLE_BRANDS: Record<string, string[]> = {
-    tir: [
-        "Mercedes-Benz (Actros, Axor)",
-        "Ford Trucks (F-MAX)",
-        "Scania (R Serisi, S Serisi)",
-        "Volvo (FH, FM)",
-        "Renault Trucks (T Serisi)",
-        "DAF (XF, CF)",
-        "MAN (TGX, TGS)",
-        "Iveco (S-Way, Stralis)"
-    ],
-    kamyon: [
-        "Ford Trucks (Cargo)",
-        "Mercedes-Benz (Atego, Axor)",
-        "MAN (TGM, TGL)",
-        "Isuzu (NPR, NQR)",
-        "Mitsubishi Fuso (Canter)",
-        "Otokar (Atlas)",
-        "Iveco (Eurocargo)"
-    ],
-    kamyonet: [
-        "Ford (Transit)",
-        "Volkswagen (Crafter, Transporter)",
-        "Fiat (Ducato, Doblo)",
-        "Renault (Master, Trafic)",
-        "Mercedes-Benz (Sprinter, Vito)",
-        "Peugeot (Boxer)",
-        "Citroen (Jumper)",
-        "Iveco (Daily)"
-    ]
+// Complex structure for Heavy Vehicles (Brand -> Models[])
+export const HEAVY_VEHICLE_DATA: Record<string, string[]> = {
+    "BMC": ["Pro", "Tuğra"],
+    "DAF": ["CF", "XF", "XG", "XG Plus"],
+    "Ford Trucks": ["Cargo", "F-Line", "F-Max"],
+    "Iveco": ["Stralis", "S-Way", "Trakker", "X-Way"],
+    "MAN": ["TGS", "TGX"],
+    "MAZ": ["4x2", "EURO 5"],
+    "Mercedes-Benz": ["Actros", "Arocs", "Axor"],
+    "Renault Trucks": ["C", "D", "Premium", "T"],
+    "Scania": ["G", "R", "S"],
+    "Volvo": ["FH", "FM"]
 };
+
+// Simple list for Vans/Light Trucks (Brand only for now, unless specific models needed later)
+export const LIGHT_VEHICLE_BRANDS = [
+    "Ford (Transit)",
+    "Volkswagen (Crafter, Transporter)",
+    "Fiat (Ducato, Doblo)",
+    "Renault (Master, Trafic)",
+    "Mercedes-Benz (Sprinter, Vito)",
+    "Peugeot (Boxer)",
+    "Citroen (Jumper)",
+    "Iveco (Daily)"
+];
 
 export const TRAILER_TYPES = [
     { id: 'tenteli', label: 'Tenteli (Standart)' },
