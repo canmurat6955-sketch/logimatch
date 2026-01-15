@@ -6,7 +6,7 @@ import { Plus, Search, Truck, MoreVertical, Filter, MapPin, User, Settings as Se
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { VEHICLE_TYPES, TIR_DATA, KAMYON_DATA, LIGHT_VEHICLE_BRANDS, TRAILER_TYPES } from "@/lib/vehicleData";
+import { VEHICLE_TYPES, TIR_DATA, KAMYON_DATA, KAMYONET_DATA, TRAILER_TYPES } from "@/lib/vehicleData";
 import { toast } from "sonner";
 
 export default function MyVehiclesPage({ params }: { params: { lang: string } }) {
@@ -108,7 +108,7 @@ export default function MyVehiclesPage({ params }: { params: { lang: string } })
                                                             <SelectItem key={b} value={b}>{b}</SelectItem>
                                                         ))
                                                     ) : (
-                                                        LIGHT_VEHICLE_BRANDS.map(b => (
+                                                        Object.keys(KAMYONET_DATA).map(b => (
                                                             <SelectItem key={b} value={b}>{b}</SelectItem>
                                                         ))
                                                     )}
@@ -116,8 +116,8 @@ export default function MyVehiclesPage({ params }: { params: { lang: string } })
                                             </Select>
                                         </div>
 
-                                        {/* Model Select (Only for Heavy Vehicles and if Brand is selected) */}
-                                        {['tir', 'kamyon'].includes(formData.type) && formData.brand && (
+                                        {/* Model Select (Now works for ALL types) */}
+                                        {formData.brand && (
                                             <div className="space-y-2">
                                                 <label className="text-sm text-zinc-400">Model</label>
                                                 <Select
@@ -132,8 +132,12 @@ export default function MyVehiclesPage({ params }: { params: { lang: string } })
                                                             TIR_DATA[formData.brand]?.map(m => (
                                                                 <SelectItem key={m} value={m}>{m}</SelectItem>
                                                             ))
-                                                        ) : (
+                                                        ) : formData.type === 'kamyon' ? (
                                                             KAMYON_DATA[formData.brand]?.map(m => (
+                                                                <SelectItem key={m} value={m}>{m}</SelectItem>
+                                                            ))
+                                                        ) : (
+                                                            KAMYONET_DATA[formData.brand]?.map(m => (
                                                                 <SelectItem key={m} value={m}>{m}</SelectItem>
                                                             ))
                                                         )}
@@ -155,18 +159,7 @@ export default function MyVehiclesPage({ params }: { params: { lang: string } })
                                             onChange={(e) => setFormData({ ...formData, plate: e.target.value.toUpperCase() })}
                                         />
                                     </div>
-                                    {/* Model Input - ONLY show for Light Vehicles (since Heavy uses Select above) */}
-                                    {!['tir', 'kamyon'].includes(formData.type) && (
-                                        <div className="space-y-2">
-                                            <label className="text-sm text-zinc-400">Yıl / Model Detayı</label>
-                                            <Input
-                                                placeholder="Örn: 2023 / 1846T"
-                                                className="bg-zinc-900 border-zinc-800"
-                                                value={formData.model}
-                                                onChange={(e) => setFormData({ ...formData, model: e.target.value })}
-                                            />
-                                        </div>
-                                    )}
+                                    {/* All types now use the Select above. Fallback input removed. */}
                                 </div>
 
                                 {/* Trailer Type (If Tir or Kamyon) */}
